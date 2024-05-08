@@ -1,4 +1,6 @@
-let db;
+export let DB = {
+  db: null,
+};
 
 const crearBaseDeDatos = () => {
 
@@ -7,9 +9,9 @@ const crearBaseDeDatos = () => {
 
   // Crear el esquema de la base de datos
   request.onupgradeneeded = () => {
-    db = request.result;
+    DB.db = request.result;
 
-    const objectStore = db.createObjectStore('clientes', {
+    const objectStore = DB.db.createObjectStore('clientes', {
       keyPath: 'id',
       autoIncrement: true
     });
@@ -18,11 +20,13 @@ const crearBaseDeDatos = () => {
     objectStore.createIndex('email', 'email', { unique: true });
     objectStore.createIndex('telefono', 'telefono', { unique: false });
     objectStore.createIndex('empresa', 'empresa', { unique: false });
+    objectStore.createIndex('id', 'id', { unique: true });
+
   };
 
   // Si la base de datos se abrió correctamente
   request.onsuccess = () => {
-    db = request.result;
+    DB.db = request.result;
     // console.log('Base de datos creada correctamente');
   };
 

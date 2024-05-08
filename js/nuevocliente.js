@@ -1,3 +1,5 @@
+import { DB } from "./app.js";
+
 // Selectores
 const formularioElement = document.querySelector('#formulario');
 const nombreElement = document.querySelector('#nombre');
@@ -13,14 +15,19 @@ const init = (event) => {
     nombre: nombreElement.value.trim(),
     email: emailElement.value.trim(),
     telefono: telefonoElement.value.trim(),
-    empresa: empresaElement.value.trim()
+    empresa: empresaElement.value.trim(),
+    id: Date.now() + Math.random().toString(36).substring(2)
   };
+
 
   if (validarCliente(cliente)) {
     mostarAlerta('Error!', 'Todos los campos son obligatorios', false);
     return;
   }
-  console.log('Todos los campos son correctos');
+
+  // Agregar cliente a la base de datos
+  agregarClienteIndexDB(cliente);
+  console.log('cliente agregado');
 };
 
 // Validar el formulario
@@ -36,11 +43,11 @@ const mostarAlerta = (tipoMensaje, mensaje, tipo = true) => {
 
     alertaElement.innerHTML = ` 
     <strong class="font-bold">${tipoMensaje}</strong>  <span class="block sm:inline">${mensaje}</span>`;
-    alertaElement.classList.add('alerta', 'text-center', 'mt-4', 'p-3', 'rounded', 'max-w-md', 'mx-auto', 'text-green-700');
+    alertaElement.classList.add('alerta', 'text-center', 'mt-4', 'p-3', 'rounded', 'max-w-md', 'mx-auto');
 
     tipo
-      ? alertaElement.classList.add('bg-green-100', 'border-green-400')
-      : alertaElement.classList.add('bg-red-100', 'border-red-400');
+      ? alertaElement.classList.add('text-green-700', 'bg-green-100', 'border-green-400')
+      : alertaElement.classList.add('text-red-700', 'bg-red-100', 'border-red-400');
 
     formularioElement.appendChild(alertaElement);
 
@@ -48,6 +55,27 @@ const mostarAlerta = (tipoMensaje, mensaje, tipo = true) => {
       alertaElement.remove();
     }, 3000);
   }
+};
+
+// Agregar cliente a la base de datos
+const agregarClienteIndexDB = (cliente) => {
+
+  const transacción = DB.db.transaction(['clientes'], 'readwrite')
+  const objectStore = transacción.objectStore('clientes');
+  objectStore.add(cliente);
+
+  transacción.onerror = () => {
+    mostarAlerta('Error!', 'Hubo un error al agregar el cliente', false);
+  };
+
+  transacción.oncomplete = () => {
+    formularioElement.reset();
+    mostarAlerta('Correcto!', 'El cliente se agregó correctamente', true);
+
+    setTimeout(() => {
+      window.location.href = 'index.html';
+    }, 2000);
+  };
 };
 
 document.addEventListener('DOMContentLoaded', () => {
