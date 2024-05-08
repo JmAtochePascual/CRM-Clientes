@@ -17,7 +17,7 @@ const init = (event) => {
   };
 
   if (validarCliente(cliente)) {
-    console.log('Todos los campos son obligatorios', 'error');
+    mostarAlerta('Error!', 'Todos los campos son obligatorios', false);
     return;
   }
   console.log('Todos los campos son correctos');
@@ -25,6 +25,30 @@ const init = (event) => {
 
 // Validar el formulario
 const validarCliente = (cliente) => Object.values(cliente).includes('') ? true : false;
+
+
+// Mostrar alerta en pantalla
+const mostarAlerta = (tipoMensaje, mensaje, tipo = true) => {
+  const alerta = document.querySelector('.alerta');
+
+  if (!alerta) {
+    const alertaElement = document.createElement('p');
+
+    alertaElement.innerHTML = ` 
+    <strong class="font-bold">${tipoMensaje}</strong>  <span class="block sm:inline">${mensaje}</span>`;
+    alertaElement.classList.add('alerta', 'text-center', 'mt-4', 'p-3', 'rounded', 'max-w-md', 'mx-auto', 'text-green-700');
+
+    tipo
+      ? alertaElement.classList.add('bg-green-100', 'border-green-400')
+      : alertaElement.classList.add('bg-red-100', 'border-red-400');
+
+    formularioElement.appendChild(alertaElement);
+
+    setTimeout(() => {
+      alertaElement.remove();
+    }, 3000);
+  }
+};
 
 document.addEventListener('DOMContentLoaded', () => {
   formularioElement.addEventListener('submit', init);
