@@ -16,7 +16,15 @@ const init = (event) => {
     empresa: empresaElement.value.trim()
   };
 
+  if (validarCliente(cliente)) {
+    console.log('Todos los campos son obligatorios', 'error');
+    return;
+  }
+  console.log('Todos los campos son correctos');
 };
+
+// Validar el formulario
+const validarCliente = (cliente) => Object.values(cliente).includes('') ? true : false;
 
 document.addEventListener('DOMContentLoaded', () => {
   formularioElement.addEventListener('submit', init);
