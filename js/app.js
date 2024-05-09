@@ -1,8 +1,6 @@
 const ListadoClientesElement = document.querySelector('#listado-clientes');
 
-export let DB = {
-  db: null,
-};
+let DB;
 
 // Crear la base de datos
 const crearBaseDeDatos = () => {
@@ -11,10 +9,10 @@ const crearBaseDeDatos = () => {
   const request = indexedDB.open('clientes', 1);
 
   // Crear el esquema de la base de datos
-  request.onupgradeneeded = () => {
-    DB.db = request.result;
+  request.onupgradeneeded = (event) => {
+    DB = event.target.result;
 
-    const objectStore = DB.db.createObjectStore('clientes', {
+    const objectStore = DB.createObjectStore('clientes', {
       keyPath: 'id',
       autoIncrement: true
     });
@@ -29,7 +27,7 @@ const crearBaseDeDatos = () => {
 
   // Si la base de datos se abrió correctamente
   request.onsuccess = () => {
-    DB.db = request.result;
+    DB = request.result;
     mostrarClientes();
     // console.log('Base de datos creada correctamente');
   };
@@ -48,7 +46,7 @@ const mostrarClientes = () => {
     ListadoClientesElement.removeChild(ListadoClientesElement.firstChild);
   }
 
-  const objectStore = DB.db.transaction('clientes').objectStore('clientes');
+  const objectStore = DB.transaction('clientes').objectStore('clientes');
 
   objectStore.openCursor().onsuccess = (event) => {
     const cursor = event.target.result;

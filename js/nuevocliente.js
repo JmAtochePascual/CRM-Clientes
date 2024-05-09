@@ -1,4 +1,4 @@
-import { DB } from "./app.js";
+let DB;
 
 // Selectores
 const formularioElement = document.querySelector('#formulario');
@@ -7,6 +7,20 @@ const emailElement = document.querySelector('#email');
 const telefonoElement = document.querySelector('#telefono');
 const empresaElement = document.querySelector('#empresa');
 
+
+// Abrir conexión con la base de datos
+const abrirConexionIndexDB = () => {
+  const abrirConexion = indexedDB.open('clientes', 1);
+
+  abrirConexion.onerror = () => {
+    // console.log('Error al abrir la base de datos');
+  };
+
+  abrirConexion.onsuccess = () => {
+    // console.log('Base de datos abierta');
+    DB = abrirConexion.result;
+  }
+};
 
 const init = (event) => {
   event.preventDefault();
@@ -27,7 +41,6 @@ const init = (event) => {
 
   // Agregar cliente a la base de datos
   agregarClienteIndexDB(cliente);
-  console.log('cliente agregado');
 };
 
 // Validar el formulario
@@ -60,7 +73,7 @@ const mostarAlerta = (tipoMensaje, mensaje, tipo = true) => {
 // Agregar cliente a la base de datos
 const agregarClienteIndexDB = (cliente) => {
 
-  const transacción = DB.db.transaction(['clientes'], 'readwrite')
+  const transacción = DB.transaction(['clientes'], 'readwrite')
   const objectStore = transacción.objectStore('clientes');
   objectStore.add(cliente);
 
@@ -80,4 +93,5 @@ const agregarClienteIndexDB = (cliente) => {
 
 document.addEventListener('DOMContentLoaded', () => {
   formularioElement.addEventListener('submit', init);
+  abrirConexionIndexDB();
 });
