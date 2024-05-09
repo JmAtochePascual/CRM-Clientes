@@ -1,4 +1,5 @@
 const ListadoClientesElement = document.querySelector('#listado-clientes');
+const accionesElement = document.querySelector('#acciones');
 
 let DB;
 
@@ -67,7 +68,7 @@ const mostrarClientes = () => {
           <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200  leading-5 text-gray-700">    
               <p class="text-gray-600">${empresa}</p>
           </td>
-          <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5">
+          <td id="acciones" class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5">
               <a href="editar-cliente.html?id=${id}" class="text-teal-600 hover:text-teal-900 mr-5">Editar</a>
               <a href="#" data-cliente="${id}" class="text-red-600 hover:text-red-900">Eliminar</a>
           </td>
@@ -89,6 +90,29 @@ const mostrarClientes = () => {
 };
 
 
+// Elimina un cliente de la base de datos
+const eliminarCliente = (event) => {
+  // event.preventDefault();
+
+  if (event.target.classList.contains('text-red-600')) {
+    const idCliente = event.target.dataset.cliente;
+
+    const transaction = DB.transaction(['clientes'], 'readwrite');
+    const objectStore = transaction.objectStore('clientes');
+
+    objectStore.delete(idCliente);
+
+    transaction.oncomplete = () => {
+      event.target.parentElement.parentElement.remove();
+    };
+
+    transaction.onerror = () => {
+      // console.log('Hubo un error al eliminar el cliente');
+    };
+  }
+};
+
 document.addEventListener('DOMContentLoaded', () => {
   crearBaseDeDatos();
+  ListadoClientesElement.addEventListener('click', eliminarCliente);
 });
