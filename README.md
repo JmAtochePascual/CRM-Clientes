@@ -59,6 +59,6 @@ Este proyecto está bajo la licencia [MIT](https://opensource.org/licenses/MIT).
 
 ## 🌐 Ver Proyecto en la WEB
 
-Puedes ver el proyecto en funcionamiento [aquí](https://jmatochepacual.github.io/CRM-Clientes/).
+Puedes ver el proyecto en funcionamiento [aquí](https://jmatochepascual.github.io/CRM-Clientes/).
 
 Todos los derechos reservados CRM Clientes 2024 ©.
