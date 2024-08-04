@@ -8,7 +8,7 @@ Este proyecto presenta una aplicación web diseñada para gestionar clientes de 
 2. 🛠️[Tecnologías y Herramientas](#tecnologías-y-herramientas)
 3. 🚀[Estructura del Proyecto](#estructura-del-proyecto)
 4. 🧑‍💻[Uso](#uso)
-5. 📌[Instalación](#instalaciónn)
+5. 📌[Instalación](#instalación)
 6. 🏗️[Contribución](#contribución)
 7. ✨[Licencia](#licencia)
 8. 🙈[Imagen de Referencia](#imagen-de-rereferencia)
@@ -16,7 +16,7 @@ Este proyecto presenta una aplicación web diseñada para gestionar clientes de 
 
 ## Descripción
 
-Este proyecto está desarrollado en JavaScript, utilizando clases para la estructura y organización del código. Además, se emplea el paradigma de programación orientada a objetos (POO) para manejar la lógica de la aplicación de manera eficiente y estructurada.
+Este proyecto presenta una aplicación web diseñada para gestionar clientes de manera eficiente. Emplea la tecnología IndexedDB para almacenar la información de los clientes localmente en el navegador, lo que habilita funcionalidades clave como agregar, mostrar, actualizar y eliminar clientes de forma dinámica y efectiva.
 
 ## Características
 
