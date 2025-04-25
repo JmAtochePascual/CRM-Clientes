@@ -1,4 +1,4 @@
-# ⚡️ CRM con IndexedDB
+# CRM con IndexedDB
 
 Una aplicación web para gestionar clientes utilizando IndexedDB como base de datos local del navegador. Permite realizar operaciones CRUD (Crear, Leer, Actualizar y Eliminar) sobre los registros de clientes.
 
@@ -14,34 +14,52 @@ Una aplicación web para gestionar clientes utilizando IndexedDB como base de da
   - Actualizar información de clientes
   - Eliminar clientes
 
-## Tecnologías y Herramientas
+## Tecnologías
 
-- HTML5
-- Tailwind CSS para estilos
-- JavaScript (ES6+)
-- IndexedDB para almacenamiento local
+![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
+
+- **HTML:** Se emplea para estructurar y organizar el contenido del sitio.
+- **CSS:** Se emplea para definir la apariencia visual y el diseño de la interfaz.
+- **JavaScript:** Se emplea para implementar la lógica y la interactividad del sitio, respondiendo a las acciones del usuario.
 
 ## Estructura del Proyecto
 
-- **css/**: Carpeta con los estilos.
-- **js/**: Carpeta código con lógica del proyecto.
-- **index.html**: Página principal.
-- **nuevi-cliente.html**: Página agregar un nuevo cliente.
-- **editar-cliente.html**: Página para editar un cliente.
-
-## Uso
-
-Abrir el archivo index.html en un navegador de su elección.
+- **css/**: Almacena todos los archivos relacionados con los estilos y la presentación visual del sitio.
+- **js/**: Almacena los archivos que contienen la lógica y funcionalidades interactivas del sitio.
+- **index.html**: Archivo principal que define la estructura base del sitio.
 
 ## Instalación
 
-No se requiere instalación adicional para utilizar este proyecto.
+> No se requiere instalación adicional para utilizar este proyecto.
+
+## Uso
+
+Para visualizar el proyecto localmente, sigue estos pasos:
+
+1. Clona este repositorio:
+
+```
+git clone https://github.com/JMatochePascual/CRM-Clientes.git
+```
+
+2. Navega al directorio del proyecto:
+
+```
+cd CRM-Clientes
+```
+
+3. Abre el archivo `index.html` en tu navegador web preferido
+
+4. Opcionalmente, puedes usar un servidor local como Live Server para una mejor experiencia
 
 ## Contribución
 
 Si deseas contribuir al proyecto, por favor sigue estos pasos en orden:
 
-1. Haz un fork del repositorio.
+1. Haz un fork del repositorio
 
 2. Crea una nueva rama para tu funcionalidad:
    ```bash
@@ -59,14 +77,6 @@ Si deseas contribuir al proyecto, por favor sigue estos pasos en orden:
 
 ## Licencia
 
-Este proyecto está bajo la licencia [MIT](https://opensource.org/licenses/MIT).
+Este proyecto se encuentra disponible bajo la licencia MIT. Puedes consultar los términos completos [aquí](https://opensource.org/licenses/MIT).
 
-## Imagen de Rereferencia
-
-![](https://i.postimg.cc/zDjn5h7F/CRM-index-DB.png)
-
-## ¡Visita Nuestro Proyecto!
-
-¿Quieres ver CRM en acción? ¡Haz clic aquí! 👉 [Visitar CRM](https://jmatochepascual.github.io/CRM-Clientes/)
-
-Hecho con 💚 por JMCode | ©2025 - Transformando tu CRM en una experiencia única
+Desarrollado con 💚 por JMCode | © 2025 - Transformando ideas en soluciones digitales
