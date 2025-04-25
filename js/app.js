@@ -1,15 +1,10 @@
-const ListadoClientesElement = document.querySelector('#listado-clientes');
-const accionesElement = document.querySelector('#acciones');
-
+const clientListeElement = document.querySelector('#listado-clientes');
+const actionsElement = document.querySelector('#acciones');
 let DB;
 
-// Crear la base de datos
-const crearBaseDeDatos = () => {
-
-  // Crear base de datos
+const createDataBase = () => {
   const request = indexedDB.open('clientes', 1);
 
-  // Crear el esquema de la base de datos
   request.onupgradeneeded = (event) => {
     DB = event.target.result;
 
@@ -18,34 +13,25 @@ const crearBaseDeDatos = () => {
       autoIncrement: true
     });
 
-    objectStore.createIndex('nombre', 'nombre', { unique: false });
+    objectStore.createIndex('name', 'name', { unique: false });
     objectStore.createIndex('email', 'email', { unique: true });
-    objectStore.createIndex('telefono', 'telefono', { unique: false });
-    objectStore.createIndex('empresa', 'empresa', { unique: false });
+    objectStore.createIndex('phone', 'phone', { unique: false });
+    objectStore.createIndex('company', 'company', { unique: false });
     objectStore.createIndex('id', 'id', { unique: true });
-
   };
 
-  // Si la base de datos se abrió correctamente
   request.onsuccess = () => {
     DB = request.result;
-    mostrarClientes();
-    // console.log('Base de datos creada correctamente');
+    showClients();
   };
 
-  // Si la base de datos no se abrió correctamente
   request.onerror = () => {
-    // console.log('Error al abrir la base de datos');
+    console.log('Error al abrir la base de datos');
   };
 };
 
-// Muestra los clientes de la base de datos en el HTML
-const mostrarClientes = () => {
-
-  // Limpiar los clientes anteriores
-  while (ListadoClientesElement.firstChild) {
-    ListadoClientesElement.removeChild(ListadoClientesElement.firstChild);
-  }
+const showClients = () => {
+  cleanHtml();
 
   const objectStore = DB.transaction('clientes').objectStore('clientes');
 
@@ -53,20 +39,20 @@ const mostrarClientes = () => {
     const cursor = event.target.result;
 
     if (cursor) {
-      const { nombre, email, telefono, empresa, id } = cursor.value;
+      const { name, email, phone, company, id } = cursor.value;
 
-      const clienteElement = document.createElement('tr');
-      clienteElement.innerHTML = ` 
+      const clientElement = document.createElement('tr');
+      clientElement.innerHTML = ` 
       <tr>
           <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-              <p class="text-sm leading-5 font-medium text-gray-700 text-lg  font-bold"> ${nombre} </p>
+              <p class="text-sm leading-5 font-medium text-gray-700 text-lg  font-bold"> ${name} </p>
               <p class="text-sm leading-10 text-gray-700"> ${email} </p>
           </td>
           <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 ">
-              <p class="text-gray-700">${telefono}</p>
+              <p class="text-gray-700">${phone}</p>
           </td>
           <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200  leading-5 text-gray-700">    
-              <p class="text-gray-600">${empresa}</p>
+              <p class="text-gray-600">${company}</p>
           </td>
           <td id="acciones" class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5">
               <a href="editar-cliente.html?id=${id}" class="text-teal-600 hover:text-teal-900 mr-5">Editar</a>
@@ -74,12 +60,12 @@ const mostrarClientes = () => {
           </td>
       </tr>  `;
 
-      ListadoClientesElement.appendChild(clienteElement);
+      clientListeElement.appendChild(clientElement);
       cursor.continue();
 
     } else {
-      if (!ListadoClientesElement.firstChild) {
-        ListadoClientesElement.innerHTML = `
+      if (!clientListeElement.firstChild) {
+        clientListeElement.innerHTML = `
           <tr>
             <td colspan="5" class="border text-center py-4">No hay clientes</td>
           </tr>
@@ -89,30 +75,32 @@ const mostrarClientes = () => {
   };
 };
 
+const cleanHtml = () => {
+  while (clientListeElement.firstChild) {
+    clientListeElement.removeChild(clientListeElement.firstChild);
+  };
+};
 
-// Elimina un cliente de la base de datos
-const eliminarCliente = (event) => {
-  // event.preventDefault();
-
+const deleteClient = (event) => {
   if (event.target.classList.contains('text-red-600')) {
-    const idCliente = event.target.dataset.cliente;
+    const clientID = event.target.dataset.cliente;
 
     const transaction = DB.transaction(['clientes'], 'readwrite');
     const objectStore = transaction.objectStore('clientes');
 
-    objectStore.delete(idCliente);
+    objectStore.delete(clientID);
 
     transaction.oncomplete = () => {
-      event.target.parentElement.parentElement.remove();
+      showClients();
     };
 
     transaction.onerror = () => {
-      // console.log('Hubo un error al eliminar el cliente');
+      console.log('Hubo un error al eliminar el cliente');
     };
-  }
+  };
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-  crearBaseDeDatos();
-  ListadoClientesElement.addEventListener('click', eliminarCliente);
+  createDataBase();
+  clientListeElement.addEventListener('click', deleteClient);
 });
